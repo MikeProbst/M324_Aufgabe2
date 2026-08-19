@@ -7,4 +7,12 @@ const commitMsgFile = process.argv[2];
 console.log("=== COMMIT-MSG HOOK TEST ===");
 console.log("Commit-Message-Datei:", commitMsgFile);
 
+const commitMessage = fs.readFileSync(commitMsgFile, "utf8").trim();
+
+console.log("Commit Message:", commitMessage);
+console.log("Alle Argumente:", process.argv);
+
+console.log("✅ Hook wurde erfolgreich ausgeführt.");
+
+// 0 = Commit erlauben
 process.exit(0);
