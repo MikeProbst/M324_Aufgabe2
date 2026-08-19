@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+const fs = require("fs");
+
+const commitMsgFile = process.argv[2];
+
+console.log("=== COMMIT-MSG HOOK TEST ===");
+console.log("Commit-Message-Datei:", commitMsgFile);
+
+process.exit(0);
