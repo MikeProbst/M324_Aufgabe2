@@ -13,7 +13,7 @@ const commitMessage = fs.readFileSync(commitMsgFile, "utf8").trim();
 const firstLine = commitMessage.split("\n")[0];
 
 // Ticketnummer, z.B. M324-123, PROJ-42, ABC-1
-const ticketRegex = /[A-Z][A-Z0-9]*-\d+/;
+const ticketRegex = /[A-Z][A-Z0-9]*\d+/;
 
 // Conventional Commit:
 // feat: ...
