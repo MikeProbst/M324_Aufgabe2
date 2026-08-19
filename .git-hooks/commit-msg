@@ -4,15 +4,44 @@ const fs = require("fs");
 
 const commitMsgFile = process.argv[2];
 
-console.log("=== COMMIT-MSG HOOK TEST ===");
-console.log("Commit-Message-Datei:", commitMsgFile);
+if (!commitMsgFile) {
+    console.error("Commit-Message-Datei wurde nicht gefunden.");
+    process.exit(1);
+}
 
 const commitMessage = fs.readFileSync(commitMsgFile, "utf8").trim();
+const firstLine = commitMessage.split("\n")[0];
 
-console.log("Commit Message:", commitMessage);
-console.log("Alle Argumente:", process.argv);
+// Ticketnummer, z.B. M324-123, PROJ-42, ABC-1
+const ticketRegex = /[A-Z][A-Z0-9]*-\d+/;
 
-console.log("✅ Hook wurde erfolgreich ausgeführt.");
+// Conventional Commit:
+// feat: ...
+// fix: ...
+// docs(readme): ...
+// feat(api)!: ...
+const conventionalCommitRegex =
+    /^[a-z][a-z0-9-]*(\([^)]+\))?!?: .+/;
 
-// 0 = Commit erlauben
+if (!conventionalCommitRegex.test(firstLine)) {
+    console.error("Ungültige Commit Message.");
+    console.error("");
+    console.error("Die Commit Message muss dem Conventional-Commits-Format entsprechen.");
+    console.error("Beispiel:");
+    console.error("  feat: M324-123 add commit message validation");
+    console.error("");
+    process.exit(1);
+}
+
+if (!ticketRegex.test(commitMessage)) {
+    console.error("Ticketnummer fehlt.");
+    console.error("");
+    console.error("Die Commit Message muss eine Ticketnummer enthalten.");
+    console.error("Beispiel:");
+    console.error("  feat: M324-123 add commit message validation");
+    console.error("");
+    process.exit(1);
+}
+
+console.log("Commit Message ist gültig.");
 process.exit(0);
